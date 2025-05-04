@@ -71,7 +71,7 @@ abstract class Client with EventEmitter {
       _appTheme == AppTheme.dark || _appTheme == AppTheme.system && systemTheme;
 
   Future<void> load() async {
-    for (String lang in ["en", "fr", "de"]) {
+    for (String lang in ["en", "fr", "de", "es"]) {
       String translationJson =
           await rootBundle.loadString("assets/lang/$lang.json");
 
