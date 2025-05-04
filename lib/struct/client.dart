@@ -146,6 +146,9 @@ abstract class Client with EventEmitter {
       case "de":
         language = Language.de;
         break;
+      case "es":
+        language = Language.es;
+        break;
       default:
         language = Language.system;
         _systemLanguage = SchedulerBinding.instance.window.locale.languageCode;
@@ -172,6 +175,8 @@ abstract class Client with EventEmitter {
         return "fr";
       case Language.de:
         return "de";
+      case Language.es:
+        return "es";
       default:
         return _systemLanguage;
     }
