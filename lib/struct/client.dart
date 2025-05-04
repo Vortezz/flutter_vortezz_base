@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_vortezz_base/enum/app_theme.dart';
 import 'package:flutter_vortezz_base/struct/event_emitter.dart';
 import 'package:flutter_vortezz_base/struct/language.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,6 +13,10 @@ abstract class Client with EventEmitter {
   Map<String, Map<String, String>> translations = {};
 
   bool _loaded = false;
+
+  AppTheme _appTheme = AppTheme.dark;
+  bool systemTheme = false;
+
   String _systemLanguage = "en";
   Language _language = Language.system;
 
@@ -48,6 +53,23 @@ abstract class Client with EventEmitter {
     preferences.setBool("$appName.bigger_text", isBiggerText);
   }
 
+  AppTheme get appTheme => _appTheme;
+
+  set appTheme(AppTheme appTheme) {
+    _appTheme = appTheme;
+
+    if (_appTheme == AppTheme.system) {
+      _appTheme = AppTheme.system;
+      systemTheme = SchedulerBinding.instance.window.platformBrightness ==
+          Brightness.dark;
+    }
+
+    preferences.setString("molkky.theme", _appTheme.name);
+  }
+
+  bool get darkTheme =>
+      _appTheme == AppTheme.dark || _appTheme == AppTheme.system && systemTheme;
+
   Future<void> load() async {
     for (String lang in ["en", "fr", "de"]) {
       String translationJson =
@@ -77,6 +99,30 @@ abstract class Client with EventEmitter {
     }
 
     _biggerText = preferences.getBool("$appName.bigger_text") ?? false;
+
+    if (!preferences.containsKey("$appName.theme")) {
+      preferences.setString("$appName.theme", "system");
+    }
+
+    switch (preferences.getString("$appName.theme")) {
+      case "system":
+        _appTheme = AppTheme.system;
+        systemTheme = SchedulerBinding.instance.window.platformBrightness ==
+            Brightness.dark;
+        break;
+      case "dark":
+        _appTheme = AppTheme.dark;
+        break;
+      case "light":
+        _appTheme = AppTheme.light;
+        break;
+      default:
+        _appTheme = AppTheme.system;
+        systemTheme = SchedulerBinding.instance.window.platformBrightness ==
+            Brightness.dark;
+        preferences.setString("$appName.theme", "system");
+        break;
+    }
 
     if (!preferences.containsKey("$appName.language")) {
       preferences.setString("$appName.language", "system");

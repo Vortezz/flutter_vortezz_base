@@ -64,7 +64,7 @@ class IconPicker extends StatelessWidget {
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: value == index
-                              ? Colors.white
+                              ? (client.darkTheme ? Colors.white : Colors.black)
                               : Colors.transparent,
                         ),
                         padding: const EdgeInsets.all(10),
@@ -80,7 +80,7 @@ class IconPicker extends StatelessWidget {
                         client: client,
                         textType:
                             value == index ? TextType.emphasis : TextType.text,
-                        color: Colors.white,
+                        color: client.darkTheme ? Colors.white : Colors.black,
                       ),
                     ],
                   ),

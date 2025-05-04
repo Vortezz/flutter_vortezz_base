@@ -41,7 +41,13 @@ class Button extends StatelessWidget {
         child: CustomText(
           text: text,
           client: client,
-          color: isBlack ? Colors.white : Colors.black,
+          color: isBlack
+              ? Colors.white
+              : (isDisabled
+                  ? client.darkTheme
+                      ? Colors.white
+                      : Colors.black
+                  : Colors.black),
           textType: TextType.emphasis,
         ),
       ),

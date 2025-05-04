@@ -4,7 +4,8 @@ enum Language {
   system(0),
   en(1),
   fr(2),
-  de(3);
+  de(3),
+  es(4);
 
   final int value;
 
@@ -18,6 +19,8 @@ enum Language {
         return Language.fr;
       case "de":
         return Language.de;
+      case "es":
+        return Language.es;
       default:
         return Language.system;
     }

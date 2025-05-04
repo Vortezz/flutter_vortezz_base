@@ -70,7 +70,7 @@ class MultipleIconPicker extends StatelessWidget {
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: value.contains(index)
-                              ? Colors.white
+                              ? (client.darkTheme ? Colors.white : Colors.black)
                               : Colors.transparent,
                         ),
                         padding: const EdgeInsets.all(10),
@@ -87,7 +87,7 @@ class MultipleIconPicker extends StatelessWidget {
                         textType: value.contains(index)
                             ? TextType.emphasis
                             : TextType.text,
-                        color: Colors.white,
+                        color: client.darkTheme ? Colors.white : Colors.black,
                       ),
                     ],
                   ),
